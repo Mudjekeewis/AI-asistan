@@ -1,7 +1,7 @@
 import { Settings } from './types';
 
 export const APP_SETTINGS: Settings = {
-  layout: '',
+  layout: 'demo3',
   container: 'fixed',
   layouts: {
     demo1: {

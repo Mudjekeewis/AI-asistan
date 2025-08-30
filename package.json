@@ -1,0 +1,27 @@
+{
+  "name": "aiasist-workspace",
+  "version": "1.0.0",
+  "description": "AI Asistan Full Stack Application",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "setup:db": "echo 'Please run database_setup.sql in pgAdmin 4'"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["ai", "asistan", "fullstack", "react", "nodejs", "postgresql"],
+  "author": "AI Asistan Team",
+  "license": "MIT"
+}
