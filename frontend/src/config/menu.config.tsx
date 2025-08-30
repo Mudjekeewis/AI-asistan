@@ -117,6 +117,7 @@ export const MENU_SIDEBAR: MenuConfig = [
       },
     ],
   },
+
   {
     title: 'My Account',
     icon: Settings,
@@ -740,6 +741,46 @@ export const MENU_SIDEBAR_COMPACT: MenuConfig = [
       { title: 'Account Deactivated', path: '/auth/account-deactivated' },
       { title: 'Error 404', path: '/error/404' },
       { title: 'Error 500', path: '/error/500' },
+    ],
+  },
+  {
+    title: 'CRM',
+    icon: Building,
+    children: [
+      {
+        title: 'Ana Sayfa',
+        children: [
+          { title: 'Dashboard', path: '/crm' },
+        ],
+      },
+      {
+        title: 'Proje Yönetimi',
+        children: [
+          { title: 'Projeler', path: '/crm/projects' },
+          { title: 'Yeni Proje', path: '/crm/projects/new' },
+        ],
+      },
+      {
+        title: 'Müşteri Yönetimi',
+        children: [
+          { title: 'Lead\'ler', path: '/crm/leads' },
+          { title: 'Yeni Lead', path: '/crm/leads/new' },
+        ],
+      },
+               {
+           title: 'Görüşmeler',
+           children: [
+             { title: 'Görüşme Geçmişi', path: '/crm/calls' },
+             { title: 'WebRTC Client', path: '/webrtc-client/client.html' },
+           ],
+         },
+      {
+        title: 'Ayarlar',
+        children: [
+          { title: 'OpenAI Ayarları', path: '/crm/settings' },
+          { title: 'Sistem Ayarları', path: '/crm/settings/system' },
+        ],
+      },
     ],
   },
 ];

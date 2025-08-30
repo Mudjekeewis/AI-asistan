@@ -27,6 +27,8 @@ export function NavbarMenu() {
     navbarMenu = MENU_SIDEBAR_CUSTOM?.[0];
   } else if (pathname.includes('/authentication/')) {
     navbarMenu = MENU_SIDEBAR?.[5];
+  } else if (pathname.includes('/crm/')) {
+    navbarMenu = MENU_SIDEBAR?.[7]; // CRM menüsü (Authentication'dan sonra)
   } else {
     navbarMenu = MENU_SIDEBAR?.[3];
   }

@@ -2,6 +2,11 @@ import { AuthRouting } from '@/auth/auth-routing';
 import { RequireAuth } from '@/auth/require-auth';
 import { ErrorRouting } from '@/errors/error-routing';
 import { Demo1Layout } from '@/layouts/demo1/layout';
+import { Demo3Layout } from '@/layouts/demo3/layout';
+import { CrmGetStartedPage } from '@/pages/crm';
+import { ProjectsListPage, ProjectFormPage } from '@/pages/crm/projects';
+import { LeadsListPage, LeadFormPage } from '@/pages/crm/leads';
+import { CallsListPage, CallDetailPage } from '@/pages/crm/calls';
 import {
   AccountActivityPage,
   AccountAllowedIPAddressesPage,
@@ -98,7 +103,7 @@ export function AppRoutingSetup() {
   return (
     <Routes>
       <Route element={<RequireAuth />}>
-        <Route element={<Demo1Layout />}>
+        <Route element={<Demo3Layout />}>
           <Route path="/" element={<DefaultPage />} />
           <Route path="/dark-sidebar" element={<Demo1DarkSidebarPage />} />
           <Route
@@ -380,6 +385,22 @@ export function AppRoutingSetup() {
             element={<AllProductsPage />}
           />
           <Route path="/auth/get-started" element={<AccountGetStartedPage />} />
+          
+          {/* CRM Routes */}
+          <Route path="/crm" element={<CrmGetStartedPage />} />
+          <Route path="/crm/projects" element={<ProjectsListPage />} />
+          <Route path="/crm/projects/new" element={<ProjectFormPage />} />
+          <Route path="/crm/projects/:id/edit" element={<ProjectFormPage />} />
+                         <Route path="/crm/leads" element={<LeadsListPage />} />
+               <Route path="/crm/leads/new" element={<LeadFormPage />} />
+               <Route path="/crm/leads/:id/edit" element={<LeadFormPage />} />
+               <Route path="/crm/calls" element={<CallsListPage />} />
+               <Route path="/crm/calls/:id" element={<CallDetailPage />} />
+        </Route>
+        
+        {/* Demo1 Layout Route */}
+        <Route element={<Demo1Layout />}>
+          <Route path="/demo1" element={<DefaultPage />} />
         </Route>
       </Route>
       <Route path="error/*" element={<ErrorRouting />} />

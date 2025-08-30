@@ -1,6 +1,7 @@
 import {
   BarChart3,
   Bell,
+  Building,
   CheckSquare,
   Code,
   HelpCircle,
@@ -49,7 +50,11 @@ export function SidebarMenu() {
       icon: Users,
       path: '/network/get-started',
       title: 'Network',
-      active: true,
+    },
+    {
+      icon: Building,
+      path: '/crm',
+      title: 'CRM',
     },
     {
       icon: Shield,
