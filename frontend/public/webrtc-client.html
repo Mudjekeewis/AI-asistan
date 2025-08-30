@@ -260,11 +260,17 @@
                     console.log('🔘 Bağlan butonuna tıklandı!');
                     console.log('🔘 This context:', this);
                     console.log('🔘 Connect method:', this.connect);
-                    await this.remoteAudio.play().catch(() => {});
+                    console.log('🔘 Connect method type:', typeof this.connect);
+                    console.log('🔘 Connect method toString:', this.connect.toString().substring(0, 100));
+                    
+                    console.log('🔘 Connect çağrısı öncesi');
                     try {
-                        await this.connect();
+                        console.log('🔘 Connect çağrısı yapılıyor...');
+                        const result = await this.connect();
+                        console.log('🔘 Connect çağrısı tamamlandı, result:', result);
                     } catch (error) {
                         console.error('🔘 Connect çağrısında hata:', error);
+                        console.error('🔘 Hata stack:', error.stack);
                     }
                 });
                 this.disconnectBtn.addEventListener('click', () => {
@@ -276,8 +282,10 @@
             }
 
             async connect() {
+                console.log('🚀 Connect fonksiyonu başladı - İLK SATIR');
+                
                 try {
-                    console.log('🚀 Connect fonksiyonu başladı');
+                    console.log('🚀 Connect fonksiyonu başladı - TRY BLOĞU');
                     this.updateStatus('connecting', 'Bağlanıyor...');
                     this.showError('');
 
@@ -410,17 +418,22 @@
 
                 // 🔸 Data channel - OpenAI Realtime için kritik!
                 this.eventsDc = this.peerConnection.createDataChannel("oai-events");
-                this.eventsDc.onopen = () => {
-                    console.log("oai-events channel OPEN");
-                    
-                    this.eventsDc.send(JSON.stringify({
-                        type: "response.create",
-                        response: {
-                            instructions: "Merhaba, ben Zeynep. Kısa tanıtım yap ve KVKK onayı sor.",
-                            modalities: ["audio"]
-                        }
-                    }));
-                };
+                                 this.eventsDc.onopen = () => {
+                     console.log("oai-events channel OPEN");
+                     
+                     // Data channel'ın hazır olduğundan emin ol
+                     setTimeout(() => {
+                         if (this.eventsDc.readyState === 'open') {
+                             this.eventsDc.send(JSON.stringify({
+                                 type: "response.create",
+                                 response: {
+                                     instructions: "Merhaba, ben Zeynep. Kısa tanıtım yap ve KVKK onayı sor.",
+                                     modalities: ["audio"]
+                                 }
+                             }));
+                         }
+                     }, 100);
+                 };
                 
                 this.eventsDc.onmessage = (e) => {
                     try {
@@ -473,11 +486,7 @@
                          console.log('🔄 Starting OpenAI connection...');
                          console.log('Session data:', JSON.stringify(message.session, null, 2));
                          
-                         // Manuel test için
-                         if (window.testOpenAI) {
-                             console.log('🧪 Calling manual test...');
-                             window.testOpenAI(message.session);
-                         }
+                         
                          
                          try {
                              console.log('🔗 Calling connectToOpenAI...');
@@ -634,37 +643,7 @@
              window.WebRTCClient = WebRTCClient;
              console.log('🌐 Global objects set:', { client: window.client, WebRTCClient: window.WebRTCClient });
              
-                           // Global test fonksiyonu
-              window.testConnect = () => {
-                  console.log('🧪 Manuel connect testi başlatılıyor...');
-                  window.client.connect();
-              };
-              
-              window.testOpenAI = async (sessionData) => {
-                 console.log('🧪 Manual OpenAI test starting...');
-                 try {
-                     const resp = await fetch(`https://api.openai.com/v1/realtime?model=${encodeURIComponent(sessionData.model)}`, {
-                         method: "POST",
-                         headers: {
-                             "Authorization": `Bearer ${sessionData.client_secret.value}`,
-                             "Content-Type": "application/sdp",
-                             "OpenAI-Beta": "realtime=v1"
-                         },
-                         body: "v=0\r\no=- 1234567890 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0\r\na=msid-semantic: WMS\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\nc=IN IP4 0.0.0.0\r\na=mid:0\r\na=sendrecv\r\na=rtpmap:111 opus/48000/2\r\n"
-                     });
-                     
-                     console.log('🧪 Test response status:', resp.status);
-                     if (resp.ok) {
-                         const answer = await resp.text();
-                         console.log('🧪 Test answer received:', answer.substring(0, 100));
-                     } else {
-                         const error = await resp.text();
-                         console.error('🧪 Test error:', error);
-                     }
-                 } catch (error) {
-                     console.error('🧪 Test failed:', error);
-                 }
-             };
+                           
          });
     </script>
 </body>
